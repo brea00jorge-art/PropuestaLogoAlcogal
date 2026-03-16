@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking UI/UX: Proveedores de Seguridad</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: Slate & Trust Blue (Clean, professional, secure) -->
+    <!-- Application Structure Plan: The SPA uses a dashboard-style architecture. It starts with a high-level executive summary, flows into an interactive regional comparison (allowing the user to drill down into Spain, Europe, USA, and Global leaders), and concludes with actionable web design trends and recommendations. This structure guides the user from understanding the global context to extracting specific, implementable ideas for their own website. -->
+    <!-- Visualization & Content Choices: 
+         1. Global Overview -> Compare average UX metrics across regions -> Bar Chart (Chart.js) -> Easy comparison of regional maturity.
+         2. Regional Deep Dive -> Compare specific features of top companies per region -> Radar Chart (Chart.js) -> Shows strengths/weaknesses across multiple variables (E-commerce, Support, Navigation, Visuals).
+         3. Design Trends -> Qualitative insights -> Interactive Grid Cards (HTML/JS) -> Keeps text organized and engaging without overwhelming the user.
+         NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        /* Custom Styles & Chart Container Constraints */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom Tab Styling */
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* Unicode Icons for UI */
+        .icon-globe::before { content: "\1F310"; }
+        .icon-chart::before { content: "\1F4CA"; }
+        .icon-shield::before { content: "\1F6E1"; }
+        .icon-lightbulb::before { content: "\1F4A1"; }
+        .icon-check::before { content: "\2714"; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center font-bold text-xl text-blue-700">
+                    <span class="icon-shield mr-2 text-2xl"></span> BenchSecur UI/UX
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#vision-global" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Visión Global</a>
+                    <a href="#analisis-regional" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Análisis Regional</a>
+                    <a href="#tendencias" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Tendencias de Diseño</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+                Investigación de Sitios Web: Proveedores de Seguridad
+            </h1>
+            <p class="mt-4 max-w-3xl mx-auto text-xl text-slate-300">
+                Análisis interactivo de las plataformas B2B y B2C líderes en España, Europa, EE. UU. y a nivel global. Descubre las mejores prácticas de diseño web, experiencia de usuario y arquitectura de la información para aplicarlas a tu propia empresa del sector.
+            </p>
+            <div class="mt-8">
+                <a href="#analisis-regional" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-slate-900 bg-white hover:bg-slate-100 md:py-4 md:text-lg transition-colors">
+                    Explorar Datos Interactivos <span class="ml-2">&#8595;</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- Visión Global Section -->
+        <section id="vision-global" class="scroll-mt-20">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-2 border-blue-500 inline-block pb-2"><span class="icon-chart mr-2"></span>Visión Global del Mercado</h2>
+                <p class="text-lg text-slate-600">
+                    Esta sección proporciona un resumen del nivel de madurez digital de las empresas proveedoras de equipos de seguridad en diferentes regiones. Analiza la puntuación media de la Experiencia de Usuario (UX) global frente a la eficiencia de sus portales de Comercio Electrónico (E-commerce) y Soporte Técnico. Este contexto es vital para entender qué estándar debes alcanzar o superar con tu nueva web.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <h3 class="text-xl font-semibold mb-6 text-center text-slate-800">Comparativa de Madurez Digital por Región (Escala 1-10)</h3>
+                <div class="chart-container">
+                    <canvas id="globalBarChart"></canvas>
+                </div>
+                <div class="mt-6 text-sm text-slate-500 text-center">
+                    <em>Nota: Datos estimados basados en auditorías heurísticas de los principales dominios de cada región.</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- Análisis Regional Interactivo -->
+        <section id="analisis-regional" class="scroll-mt-20">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-2 border-blue-500 inline-block pb-2"><span class="icon-globe mr-2"></span>Análisis Regional Detallado</h2>
+                <p class="text-lg text-slate-600">
+                    Interactúa con el menú inferior para filtrar los datos por mercado. Al seleccionar una región, el gráfico de radar inferior se actualizará para mostrar una comparativa directa de las características clave (Navegación, E-commerce, Soporte, Diseño Visual) entre las empresas más representativas de esa zona. Utiliza esto para identificar qué funcionalidades destacan en tu mercado objetivo.
+                </p>
+            </div>
+
+            <!-- Interactive Tabs -->
+            <div class="flex flex-wrap gap-2 mb-8 justify-center border-b border-slate-200 pb-4">
+                <button onclick="updateRegion('espana')" id="tab-espana" class="tab-btn active px-6 py-2 rounded-full border border-slate-300 font-medium text-slate-700 bg-white hover:bg-slate-50">España</button>
+                <button onclick="updateRegion('europa')" id="tab-europa" class="tab-btn px-6 py-2 rounded-full border border-slate-300 font-medium text-slate-700 bg-white hover:bg-slate-50">Europa</button>
+                <button onclick="updateRegion('usa')" id="tab-usa" class="tab-btn px-6 py-2 rounded-full border border-slate-300 font-medium text-slate-700 bg-white hover:bg-slate-50">Estados Unidos</button>
+                <button onclick="updateRegion('global')" id="tab-global" class="tab-btn px-6 py-2 rounded-full border border-slate-300 font-medium text-slate-700 bg-white hover:bg-slate-50">Top Global</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Info Cards (Updates dynamically) -->
+                <div class="lg:col-span-1 space-y-4" id="region-cards-container">
+                    <!-- Cards injected by JS -->
+                </div>
+
+                <!-- Radar Chart -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 id="radar-title" class="text-xl font-semibold mb-4 text-center text-slate-800">Comparativa de Características UI/UX</h3>
+                    <div class="chart-container">
+                        <canvas id="regionRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tendencias de Diseño y Recomendaciones -->
+        <section id="tendencias" class="scroll-mt-20">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-2 border-blue-500 inline-block pb-2"><span class="icon-lightbulb mr-2"></span>Mejores Prácticas para tu Web</h2>
+                <p class="text-lg text-slate-600">
+                    Basado en el análisis de los líderes del sector, hemos consolidado las tendencias arquitectónicas y de diseño más efectivas. Estas son las características "imprescindibles" que tu nueva página de venta o distribución de equipos de seguridad debería incorporar para generar confianza y facilitar la conversión B2B/B2C. Haz clic en cada tarjeta para ver los detalles.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetails('detail-1')">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        &#128269;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Buscador Predictivo y Filtros Avanzados</h3>
+                    <p class="text-slate-600 mb-4">El catálogo de seguridad suele ser técnico y extenso. Un buscador robusto es crucial.</p>
+                    <div id="detail-1" class="hidden text-sm text-slate-700 bg-slate-50 p-4 rounded-md border border-slate-100">
+                        <strong>Implementación:</strong> Búsqueda por SKU o modelo, filtros por tecnología (IP, Analógica, Térmica), resolución (2MP, 4K) o marca. Las webs top (como Visiotech o Axis) permiten encontrar el producto exacto en menos de 3 clics.
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetails('detail-2')">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        &#128196;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Documentación Técnica Accesible</h3>
+                    <p class="text-slate-600 mb-4">Los instaladores necesitan manuales, datasheets y firmwares rápidos.</p>
+                    <div id="detail-2" class="hidden text-sm text-slate-700 bg-slate-50 p-4 rounded-md border border-slate-100">
+                        <strong>Implementación:</strong> Área de descargas centralizada o pestañas claras dentro de la ficha de producto. Requisito de login (Área Privada) para softwares específicos es una práctica común B2B para captar leads.
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetails('detail-3')">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        &#128187;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Área Privada B2B (E-commerce)</h3>
+                    <p class="text-slate-600 mb-4">Diferenciación de precios y stock en tiempo real para profesionales.</p>
+                    <div id="detail-3" class="hidden text-sm text-slate-700 bg-slate-50 p-4 rounded-md border border-slate-100">
+                        <strong>Implementación:</strong> Portal de clientes donde los instaladores ven su descuento asignado, gestionan RMAs (devoluciones y garantías), repiten pedidos anteriores y consultan el estado del envío.
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetails('detail-4')">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        &#128247;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Renders 3D y Visualización Limpia</h3>
+                    <p class="text-slate-600 mb-4">La calidad visual transmite fiabilidad y alta tecnología.</p>
+                    <div id="detail-4" class="hidden text-sm text-slate-700 bg-slate-50 p-4 rounded-md border border-slate-100">
+                        <strong>Implementación:</strong> Evitar fotos de catálogo de baja calidad. Usar fondos blancos puros, vistas en 360 grados de las cámaras de seguridad, y diagramas de conexión visuales. Tipografía limpia (sans-serif) y alto contraste.
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetails('detail-5')">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        &#128172;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Soporte Técnico Omnicanal</h3>
+                    <p class="text-slate-600 mb-4">Asistencia rápida durante las instalaciones en campo.</p>
+                    <div id="detail-5" class="hidden text-sm text-slate-700 bg-slate-50 p-4 rounded-md border border-slate-100">
+                        <strong>Implementación:</strong> Chat en vivo integrado, sistema de tickets eficiente visible desde el panel de control móvil, y base de conocimientos (FAQ/Wiki) bien estructurada para resolver dudas comunes sin contacto humano.
+                    </div>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="bg-blue-600 rounded-xl shadow-sm border border-blue-700 p-6 text-white flex flex-col justify-center text-center">
+                    <h3 class="text-2xl font-bold mb-4">¿Listo para diseñar?</h3>
+                    <p class="mb-6 opacity-90">Toma estos datos como base funcional para el wireframe de tu nuevo proyecto.</p>
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="inline-block bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-slate-100 transition-colors">
+                        Volver arriba
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center border-t border-slate-800">
+        <p>&copy; 2026 BenchSecur Analysis. Mockup Data para fines de diseño y arquitectura de información.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Storage: Simulated benchmarking data for Security Equipment Providers
+        const reportData = {
+            globalAverages: {
+                labels: ['España', 'Europa', 'EE.UU.', 'Top Global'],
+                datasets: [
+                    {
+                        label: 'UX/Navegación General',
+                        data: [7.5, 8.2, 8.0, 8.8],
+                        backgroundColor: '#3b82f6', // blue-500
+                    },
+                    {
+                        label: 'Potencia E-commerce B2B',
+                        data: [8.5, 7.0, 7.5, 8.0],
+                        backgroundColor: '#0f172a', // slate-900
+                    },
+                    {
+                        label: 'Soporte y Documentación',
+                        data: [7.8, 8.8, 8.5, 8.2],
+                        backgroundColor: '#94a3b8', // slate-400
+                    }
+                ]
+            },
+            regions: {
+                espana: {
+                    title: 'Líderes Distribución España',
+                    description: 'En España destacan los grandes distribuidores multimillonarios B2B. Sus puntos fuertes son el E-commerce robusto (gestión de stock real) y los servicios de valor añadido para instaladores.',
+                    companies: [
+                        { name: 'Distribuidor V (Ref. Visiotech)', ux: 8, ecommerce: 9.5, support: 8, visual: 8, desc: 'Líder en e-commerce B2B, app móvil potente y buscador impecable.' },
+                        { name: 'Distribuidor B (Ref. ByDemes)', ux: 7.5, ecommerce: 8.5, support: 8, visual: 7, desc: 'Catálogo inmenso, portal del cliente muy funcional pero diseño más clásico.' },
+                        { name: 'Distribuidor H (Ref. Hommax)', ux: 7, ecommerce: 7.5, support: 7.5, visual: 7, desc: 'Fuerte enfoque en servicio al cliente y marcas exclusivas.' }
+                    ]
+                },
+                europa: {
+                    title: 'Fabricantes Líderes Europa',
+                    description: 'Dominado por fabricantes directos de alta gama. Su enfoque web está en la presentación de la marca, especificaciones técnicas detalladas y herramientas de diseño de proyectos.',
+                    companies: [
+                        { name: 'Fabricante A (Ref. Axis/Suecia)', ux: 9, ecommerce: 6, support: 9.5, visual: 9, desc: 'Experiencia premium, herramientas de diseño de red y academia online líder.' },
+                        { name: 'Fabricante B (Ref. Bosch/Alemania)', ux: 8.5, ecommerce: 6.5, support: 9, visual: 8.5, desc: 'Documentación técnica exhaustiva y portales de partners integrados.' }
+                    ]
+                },
+                usa: {
+                    title: 'Integradores & Fabricantes EE.UU.',
+                    description: 'Enfoque híbrido entre soluciones comerciales masivas y sistemas de integración complejos. Gran énfasis en el marketing de soluciones verticales (Educación, Retail, etc.).',
+                    companies: [
+                        { name: 'Empresa H (Ref. Honeywell)', ux: 8, ecommerce: 7, support: 8.5, visual: 8, desc: 'Navegación orientada a sectores industriales y soluciones completas.' },
+                        { name: 'Empresa M (Ref. Motorola/Avigilon)', ux: 8.5, ecommerce: 7, support: 8, visual: 9, desc: 'Sitio muy visual, centrado en soluciones de IA y analítica de vídeo.' }
+                    ]
+                },
+                global: {
+                    title: 'Gigantes Asiáticos (Impacto Global)',
+                    description: 'Los mayores fabricantes por volumen mundial. Sus webs son enormes repositorios de información con portales de soporte masivos, aunque la UX a veces sufre por la inmensidad del catálogo.',
+                    companies: [
+                        { name: 'Fabricante H (Ref. Hikvision)', ux: 7.5, ecommerce: 8, support: 7.5, visual: 8, desc: 'Centro de descargas masivo, portal de e-learning y calculadoras de almacenamiento.' },
+                        { name: 'Fabricante D (Ref. Dahua)', ux: 7, ecommerce: 7.5, support: 7, visual: 7.5, desc: 'Estructura similar, fuerte en herramientas de selección de productos (Product Selector).' }
+                    ]
+                }
+            }
+        };
+
+        // State Management
+        let currentRadarChart = null;
+
+        // Configuration for Charts to ensure responsiveness
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        };
+
+        // Initialize Global Bar Chart
+        function initGlobalChart() {
+            const ctx = document.getElementById('globalBarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: reportData.globalAverages,
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: { display: true, text: 'Puntuación (1-10)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render Regional Radar Chart & Cards
+        function updateRegion(regionId) {
+            const data = reportData.regions[regionId];
+            
+            // 1. Update UI Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            const activeTab = document.getElementById(`tab-${regionId}`);
+            activeTab.classList.remove('bg-white', 'text-slate-700');
+            activeTab.classList.add('active', 'bg-blue-600', 'text-white');
+
+            // 2. Update Cards content
+            const container = document.getElementById('region-cards-container');
+            container.innerHTML = `
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-4">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">${data.title}</h4>
+                    <p class="text-sm text-slate-600">${data.description}</p>
+                </div>
+            `;
+            
+            data.companies.forEach((comp, index) => {
+                // Different border colors for visual distinction
+                const borderColors = ['border-blue-500', 'border-slate-800', 'border-slate-400'];
+                container.innerHTML += `
+                    <div class="bg-white border-l-4 ${borderColors[index % 3]} shadow-sm rounded-r-xl p-4">
+                        <h5 class="font-bold text-slate-800">${comp.name}</h5>
+                        <p class="text-xs text-slate-500 mt-1">${comp.desc}</p>
+                    </div>
+                `;
+            });
+
+            // 3. Update Radar Chart
+            const ctx = document.getElementById('regionRadarChart').getContext('2d');
+            
+            // Destroy previous instance to avoid rendering bugs
+            if (currentRadarChart) {
+                currentRadarChart.destroy();
+            }
+
+            const chartColors = [
+                { bg: 'rgba(59, 130, 246, 0.2)', border: '#3b82f6' }, // blue-500
+                { bg: 'rgba(15, 23, 42, 0.2)', border: '#0f172a' },   // slate-900
+                { bg: 'rgba(148, 163, 184, 0.2)', border: '#94a3b8' } // slate-400
+            ];
+
+            const datasets = data.companies.map((comp, index) => ({
+                label: comp.name,
+                data: [comp.ux, comp.ecommerce, comp.support, comp.visual],
+                fill: true,
+                backgroundColor: chartColors[index % 3].bg,
+                borderColor: chartColors[index % 3].border,
+                pointBackgroundColor: chartColors[index % 3].border,
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: chartColors[index % 3].border
+            }));
+
+            currentRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['UX/Navegación', 'Potencia E-commerce', 'Soporte/Documentos', 'Diseño Visual/Renders'],
+                    datasets: datasets
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 4,
+                            suggestedMax: 10,
+                            ticks: {
+                                stepSize: 1,
+                                backdropColor: 'transparent'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Interaction for Trend Cards (Show/Hide Details)
+        function toggleDetails(elementId) {
+            const el = document.getElementById(elementId);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                el.classList.add('block');
+            } else {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            }
+        }
+
+        // Initialize App on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            initGlobalChart();
+            updateRegion('espana'); // Load Spain by default
+        });
+    </script>
+</body>
+</html>

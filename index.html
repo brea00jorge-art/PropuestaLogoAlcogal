@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuestas de Header - ALCOGAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100..900;1,100..900&family=Teko:wght@300..700&display=swap');
+
+        :root {
+            /* Colores Propuesta 1 (Basados en alcogal-01) */
+            --color-p1-dark: #2C4251;
+            --color-p1-accent: #2C4251;
+            --color-p1-gray: #AFAFAF;
+
+            /* Colores Propuesta 2 (Basados en alcogal-02) */
+            --color-p2-red: #8B1E2B;
+            --color-p2-dark: #333333;
+            /* Colores Propuesta 3 (Identidad J.Dean) */
+            --color-p3-accent: #c7c6c6;
+            /* El gris que pediste para el subrayado */
+            --color-p3-dark: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .demo-section {
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+
+        .label {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Estilos Base del Header --- */
+        header {
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* --- Estructura para centrar el menú --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            /* Creamos 3 columnas: 
+       1fr (espacio flexible a la izquierda) 
+       auto (el ancho que necesite el menú) 
+       1fr (espacio flexible a la derecha para equilibrar) */
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            height: 90px;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: flex-start;
+            /* Logo siempre a la izquierda */
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            /* Menú en la columna central */
+        }
+
+        /* Estilos para el contenedor del menú */
+        #nav1 ul {
+            display: flex;
+            /* Los pone en fila */
+            list-style: none;
+            /* Quita los puntos */
+            gap: 30px;
+            /* Espacio entre botones */
+            padding: 0;
+            margin: 0;
+            font-family: 'Teko', sans-serif;
+        }
+
+        /* Estilos para los enlaces (el texto) */
+        #nav1 a {
+
+            text-decoration: none;
+            /* Quita el subrayado */
+            color: #c7c6c6;
+            /* Color oscuro profesional */
+            font-size: 22px;
+            /* Teko tiende a verse pequeña, mejor subir el tamaño */
+            font-weight: 500;
+            /* Peso intermedio */
+            text-transform: uppercase;
+            /* Mayúsculas (estilo muy Apotek) */
+            letter-spacing: 1px;
+            /* Un poco de aire entre letras */
+            transition: 0.3s;
+        }
+
+        /* Efecto al pasar el ratón */
+        #nav1 a:hover {
+            color: #2b4452;
+            /* Cambia de color al pasar el mouse */
+            letter-spacing: 2px;
+            /* Efecto visual sutil */
+        }
+
+        /* Estilo para el contenedor de la lista */
+        #nav2 ul {
+            list-style: none;
+            /* Quita los puntos/viñetas */
+            padding: 0;
+            margin: 0;
+            display: flex;
+            /* Alinea los elementos en horizontal */
+            gap: 20px;
+            /* Espacio entre cada opción */
+            font-family: 'Georama', sans-serif;
+        }
+
+        /* Estilo para los enlaces (el texto clickeable) */
+        #nav2 a {
+            font-size: 22px;
+            text-decoration: none;
+            /* Quita el subrayado azul por defecto */
+            color: #c7c6c6;
+            /* Color del texto */
+            font-weight: 500;
+            /* Grosor de la fuente */
+            transition: color 0.3s;
+            /* Suaviza el cambio de color al pasar el mouse */
+        }
+
+        /* Efecto al pasar el ratón (hover) */
+        #nav2 a:hover {
+            color: #8f1d2b;
+            /* Cambia a azul al pasar el mouse */
+        }
+
+        .header-p3 .container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            height: 90px;
+        }
+
+        #nav3 ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            /* Bajamos de 30px a 15px para compensar el espacio de la flecha */
+            padding: 0;
+            margin: 0;
+            font-family: 'Georama', sans-serif;
+        }
+
+        #nav3 a {
+            text-decoration: none;
+            color: #c7c6c6;
+            font-size: 18px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+
+            /* Reducimos el padding para que la flecha esté cerca del texto */
+            padding: 5px 18px 5px 0;
+
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        /* La flecha invisible por defecto */
+        #nav3 a::after {
+            content: 'V';
+            font-size: 5px;
+            position: absolute;
+            right: 0;
+            opacity: 0;
+            transform: rotate(-80deg);
+            /* Empieza totalmente invertida para un giro más largo */
+
+            /* Aumentamos el tiempo a 0.8s para que sea más lenta */
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #2b4452;
+
+        }
+
+        /* Efecto al pasar el mouse */
+        #nav3 a:hover {
+
+            color: #ec6707;
+            padding-bottom: 8px;
+        }
+
+        /* La flecha aparece y gira hacia abajo */
+        #nav3 a:hover::after {
+            opacity: 1;
+            transform: rotate(-1deg);
+            font-size: 14px;
+            /* Gira lentamente hasta su posición final */
+        }
+
+
+        /* Aseguramos que el logo de la p3 use el mismo hover que los otros */
+        .header-p3 .logo img {
+            height: 50px;
+            width: auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .header-p3 .logo img:hover {
+            transform: scale(1.05);
+        }
+
+
+
+
+
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Cambio a blanco con una pizca de transparencia para suavizar */
+            background-color: rgba(255, 255, 255, 0.98);
+            cursor: zoom-out;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay img {
+            max-width: 85%;
+            max-height: 75%;
+            /* Sombra suave para dar profundidad sobre el blanco */
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+
+        /* Botón de cierre ahora en color oscuro */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #333;
+            font-size: 50px;
+            font-weight: 300;
+            cursor: pointer;
+        }
+
+        /* Opcional: que el logo original parezca clickeable */
+        .logo img {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* Añadimos un div vacío o un botón en el HTML para equilibrar el grid 
+   si quieres que el centro sea matemático respecto a la pantalla */
+        .header-extra {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Ajuste para que el menú no se amontone en pantallas medianas */
+        @media (max-width: 992px) {
+            .container {
+                display: flex;
+                /* Volvemos a flex en móvil para que sea más fácil de manejar */
+                justify-content: space-between;
+            }
+        }
+
+        .logo img {
+            height: 50px;
+            /* Ajuste automático según el logo */
+            width: auto;
+            display: block;
+        }
+
+        /* --- Menú de Navegación --- */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        /* --- Estilos Específicos Propuesta 1 --- */
+        .header-p1 nav ul li a {
+            color: var(--color-p1-dark);
+        }
+
+        .header-p1 nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-p1-accent);
+            transition: width 0.3s ease;
+        }
+
+        .header-p1 nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* --- Estilos Específicos Propuesta 2 --- */
+        .header-p2 nav ul li a {
+            color: var(--color-p2-dark);
+        }
+
+        .header-p2 nav ul li a:hover {
+            color: var(--color-p2-red);
+        }
+
+        .header-p2 .btn-contact {
+            background-color: var(--color-p2-red);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-left: 20px;
+        }
+
+        /* --- Responsive / Menú Hamburguesa --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease-in-out;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+            }
+
+            nav.active {
+                height: 300px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 0;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="demo-section">
+        <p class="label">Propuesta 01: Identidad <spam style="color: #8f1d2b;">Nieto</spam></p>
+        <header class="header-p2">
+            <div class="container">
+                <div class="logo">
+                    <img src="propuesta_logos/alcogal-02.webp" alt="Alcogal Logo 2" style="height: 60px; ">
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu('nav2', this)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav id="nav2">
+                    <ul>
+                        <li><a href="#">Productos</a></li>
+                        <li><a href="#">Novedades</a></li>
+                        <li><a href="#">Formación técnica</a></li>
+                        <li><a href="#">Empresa</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    </section>
+
+    <hr>
+
+    <section class="demo-section">
+        <p class="label">Propuesta 02: Identidad <spam style="color: #2b4452;">MARK</spam><spam style="color: #c7c6c6;">-3</spam></p>
+        <header class="header-p1">
+            <div class="container">
+                <div class="logo">
+                    <img src="propuesta_logos/alcogal-01.webp" alt="Alcogal Logo 1">
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu('nav1', this)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav id="nav1">
+                    <ul>
+                        <li><a href="#">Productos</a></li>
+                        <li><a href="#">Novedades</a></li>
+                        <li><a href="#">Formación técnica</a></li>
+                        <li><a href="#">Empresa</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    </section>
+
+
+    <hr>
+
+    <section class="demo-section">
+        <p class="label">Propuesta 03: Identidad <spam style="color: #ec6707;">J.</spam><spam style="color: #2b4452;">Dean</spam></p>
+        <header class="header-p3">
+            <div class="container">
+                <div class="logo">
+                    <img src="propuesta_logos/alcogal-03.webp" alt="Alcogal Logo 3">
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu('nav3', this)">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav id="nav3">
+                    <ul>
+                        <li><a href="#">Productos</a></li>
+                        <li><a href="#">Novedades</a></li>
+                        <li><a href="#">Formación técnica</a></li>
+                        <li><a href="#">Empresa</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    </section>
+    <!-- Modal para ver el logo en grande -->
+    <div id="logoModal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-btn">&times;</span>
+        <img id="modalImg" src="" alt="Logo ampliado">
+    </div>
+
+
+    <script>
+        function toggleMenu(navId, button) {
+            const nav = document.getElementById(navId);
+            nav.classList.toggle('active');
+
+            // Animación simple del botón
+            const spans = button.querySelectorAll('span');
+            if (nav.classList.contains('active')) {
+                spans[0].style.transform = "rotate(45deg) translate(5px, 6px)";
+                spans[1].style.opacity = "0";
+                spans[2].style.transform = "rotate(-45deg) translate(5px, -7px)";
+            } else {
+                spans[0].style.transform = "none";
+                spans[1].style.opacity = "1";
+                spans[2].style.transform = "none";
+            }
+        }
+        document.querySelectorAll('.logo img').forEach(img => {
+            img.addEventListener('click', function () {
+                const modal = document.getElementById('logoModal');
+                const modalImg = document.getElementById('modalImg');
+
+                modal.style.display = "flex";
+                modalImg.src = this.src; // Pasa la ruta de la imagen clickeada
+            });
+        });
+
+        function closeModal() {
+            document.getElementById('logoModal').style.display = "none";
+        }
+
+    </script>
+</body>
+
+</html>
